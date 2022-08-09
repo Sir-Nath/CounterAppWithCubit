@@ -80,16 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               value: BlocProvider.of<CounterCubit>(context),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) {
-                    return BlocProvider.value(
-                      value: BlocProvider.of<CounterCubit>(context),
-                      child: const SecondScreen(
-                        title: 'First Screen',
-                        color: Colors.red,
-                      ),
-                    );
-                  }));
+                  Navigator.of(context).pushNamed('/first');
                 },
                 color: widget.color,
                 child: const Text('First Screen'),
@@ -100,16 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) {
-                  return BlocProvider.value(
-                    value: BlocProvider.of<CounterCubit>(context),
-                    child: const SecondScreen(
-                      title: 'Second Screen',
-                      color: Colors.green,
-                    ),
-                  );
-                }));
+                Navigator.of(context).pushNamed('/second');
               },
               color: widget.color,
               child: const Text('Second Screen'),

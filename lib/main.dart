@@ -1,16 +1,29 @@
 import 'package:counter_app_cubit/bloc/cubit/counter_cubit.dart';
+import 'package:counter_app_cubit/views/screens/first_screen.dart';
 import 'package:counter_app_cubit/views/screens/home_screen.dart';
+import 'package:counter_app_cubit/views/screens/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  // This widget is the root of your application.
+
+class _MyAppState extends State<MyApp> {
+  final CounterCubit _counterCubit = CounterCubit();
+
+  @override
+  void dispose() {
+   _counterCubit.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,13 +32,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<CounterCubit>(
-        create: (context) => CounterCubit(),
-        child: const HomeScreen(
-          title: 'Cubit Counter',
-          color: Colors.blue,
-        ),
-      ),
+      routes: {
+        '/': (context) =>
+            BlocProvider.value(
+              value: _counterCubit,
+              child: const HomeScreen(
+                title: 'Home Screen',
+                color: Colors.blue,
+              ),
+            ),
+        '/first': (context) =>
+            BlocProvider.value(
+              value: _counterCubit,
+              child: const FirstScreen(
+                title: 'First Screen',
+                color: Colors.red,
+              ),
+            ),
+        '/second': (context) =>
+            BlocProvider.value(
+              value: _counterCubit,
+              child: const SecondScreen(
+                title: 'Second Screen',
+                color: Colors.green,
+              ),
+            ),
+      },
     );
   }
 }
