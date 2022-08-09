@@ -1,4 +1,5 @@
 import 'package:counter_app_cubit/bloc/cubit/counter_cubit.dart';
+import 'package:counter_app_cubit/constants/routes/routes.dart';
 import 'package:counter_app_cubit/views/screens/first_screen.dart';
 import 'package:counter_app_cubit/views/screens/home_screen.dart';
 import 'package:counter_app_cubit/views/screens/second_screen.dart';
@@ -16,11 +17,12 @@ class MyApp extends StatefulWidget {
 
 
 class _MyAppState extends State<MyApp> {
-  final CounterCubit _counterCubit = CounterCubit();
+  //final CounterCubit _counterCubit = CounterCubit();
+  final AppRouter _appRouter = AppRouter();
 
   @override
   void dispose() {
-   _counterCubit.close();
+   _appRouter.dispose();
     super.dispose();
   }
 
@@ -32,32 +34,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (context) =>
-            BlocProvider.value(
-              value: _counterCubit,
-              child: const HomeScreen(
-                title: 'Home Screen',
-                color: Colors.blue,
-              ),
-            ),
-        '/first': (context) =>
-            BlocProvider.value(
-              value: _counterCubit,
-              child: const FirstScreen(
-                title: 'First Screen',
-                color: Colors.red,
-              ),
-            ),
-        '/second': (context) =>
-            BlocProvider.value(
-              value: _counterCubit,
-              child: const SecondScreen(
-                title: 'Second Screen',
-                color: Colors.green,
-              ),
-            ),
-      },
+      onGenerateRoute: _appRouter.onGenerateRoute,
     );
   }
 }
